@@ -1,5 +1,5 @@
 // main.js
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const createMenu = require('./menu');
@@ -39,4 +39,21 @@ app.on('activate', () => {
 
 ipcMain.on('save-file', (event, { filePath, content }) => {
   fs.writeFileSync(filePath, content, 'utf8');
+});
+
+ipcMain.handle('save-file-dialog', async () => {
+  const result = await dialog.showSaveDialog(mainWindow, {
+    filters: [{ name: 'Markdown', extensions: ['md'] }]
+  });
+  return result;
+});
+
+ipcMain.handle('save-file', async (event, { filePath, content }) => {
+  try {
+    await fs.promises.writeFile(filePath, content, 'utf8');
+    return { success: true };
+  } catch (error) {
+    console.error('Error saving file:', error);
+    return { success: false, error: error.message };
+  }
 });

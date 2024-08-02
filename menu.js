@@ -46,6 +46,14 @@ function createMenu(mainWindow) {
               mainWindow.webContents.send('save-file-as', result.filePath);
             }
           }
+        },
+        {
+          label: 'Toggle Auto-Save',
+          type: 'checkbox',
+          checked: false,
+          click: (menuItem) => {
+            mainWindow.webContents.send('toggle-auto-save', menuItem.checked);
+          }
         }
       ]
     }
