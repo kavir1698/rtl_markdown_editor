@@ -15,36 +15,24 @@ function createMenu(mainWindow) {
           }
         },
         {
-          label: 'Open File',
+          label: 'Open',
           accelerator: 'CmdOrCtrl+O',
-          click: async () => {
-            const result = await dialog.showOpenDialog(mainWindow, {
-              properties: ['openFile'],
-              filters: [{ name: 'Markdown', extensions: ['md'] }]
-            });
-            if (!result.canceled) {
-              const content = fs.readFileSync(result.filePaths[0], 'utf8');
-              mainWindow.webContents.send('file-opened', content);
-            }
+          click: () => {
+            mainWindow.webContents.send('menu-open');
           }
         },
         {
           label: 'Save',
           accelerator: 'CmdOrCtrl+S',
           click: () => {
-            mainWindow.webContents.send('save-file');
+            mainWindow.webContents.send('menu-save');
           }
         },
         {
           label: 'Save As',
           accelerator: 'CmdOrCtrl+Shift+S',
-          click: async () => {
-            const result = await dialog.showSaveDialog(mainWindow, {
-              filters: [{ name: 'Markdown', extensions: ['md'] }]
-            });
-            if (!result.canceled) {
-              mainWindow.webContents.send('save-file-as', result.filePath);
-            }
+          click: () => {
+            mainWindow.webContents.send('menu-save-as');
           }
         },
         {

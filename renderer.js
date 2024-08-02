@@ -1,6 +1,8 @@
 // renderer.js
 const { ipcRenderer } = require('electron');
 
+let currentFilePath = null;
+
 document.addEventListener('DOMContentLoaded', () => {
   const editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
     mode: 'markdown',
@@ -15,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let isAutoSaveEnabled = false;
   let autoSaveTimer = null;
 
-  // Handle Ctrl+S shortcut
   async function saveFile() {
     if (currentFilePath) {
       const result = await ipcRenderer.invoke('save-file', { filePath: currentFilePath, content: editor.getValue() });
@@ -23,13 +24,17 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Failed to save file:', result.error);
       }
     } else {
-      const result = await ipcRenderer.invoke('save-file-dialog');
-      if (!result.canceled) {
-        currentFilePath = result.filePath;
-        const saveResult = await ipcRenderer.invoke('save-file', { filePath: currentFilePath, content: editor.getValue() });
-        if (!saveResult.success) {
-          console.error('Failed to save file:', saveResult.error);
-        }
+      await saveAs();
+    }
+  }
+
+  async function saveAs() {
+    const result = await ipcRenderer.invoke('save-file-dialog');
+    if (!result.canceled) {
+      currentFilePath = result.filePath;
+      const saveResult = await ipcRenderer.invoke('save-file', { filePath: currentFilePath, content: editor.getValue() });
+      if (!saveResult.success) {
+        console.error('Failed to save file:', saveResult.error);
       }
     }
   }
@@ -57,9 +62,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isAutoSaveEnabled) {
       startAutoSave();
     }
+    console.log('Editor content changed');
   });
 
-  ipcRenderer.on('save-file', saveFile);
+  ipcRenderer.on('menu-save', saveFile);
+  ipcRenderer.on('menu-save-as', saveAs);
+
+  ipcRenderer.on('menu-open', async () => {
+    const result = await ipcRenderer.invoke('open-file-dialog');
+    if (result) {
+      currentFilePath = result.filePath;
+      editor.setValue(result.content);
+    }
+  });
 
   ipcRenderer.on('toggle-auto-save', (event, enabled) => {
     isAutoSaveEnabled = enabled;
@@ -82,32 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   editor.setValue('# سلام دنیا\n\nاین یک ویرایشگر مارک‌داون راست به چپ است.');
 
-  let currentFilePath = null;
-
   ipcRenderer.on('new-file', () => {
     editor.setValue('');
     currentFilePath = null;
-  });
-
-  ipcRenderer.on('file-opened', (event, content) => {
-    editor.setValue(content);
-  });
-
-  ipcRenderer.on('save-file', () => {
-    if (currentFilePath) {
-      ipcRenderer.send('save-file', { filePath: currentFilePath, content: editor.getValue() });
-    } else {
-      ipcRenderer.send('save-file-as', editor.getValue());
-    }
-  });
-
-  ipcRenderer.on('save-file-as', (event, filePath) => {
-    currentFilePath = filePath;
-    ipcRenderer.send('save-file', { filePath, content: editor.getValue() });
-  });
-
-  editor.on('change', () => {
-    console.log('Editor content changed');
   });
 
   editor.on('focus', () => {
