@@ -1,6 +1,6 @@
 # RTL Markdown Editor
 
-A simple markdown editor with Right-to-Left (RTL) language support built using Electron.
+A simple markdown editor for Right-to-Left (RTL) languages (e.g. Persian, Arabic, Hebrew).
 
 ## Development Prerequisites
 
