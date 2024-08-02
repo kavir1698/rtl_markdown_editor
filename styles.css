@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -16,6 +17,7 @@ html, body {
   width: 100% !important;
   direction: rtl;
   font-size: 16px;
+  overflow: hidden;
 }
 
 .CodeMirror-gutters {
@@ -26,4 +28,12 @@ html, body {
 .CodeMirror-sizer {
   margin-left: 0 !important;
   margin-right: 30px !important;
+}
+
+.CodeMirror-scroll {
+  overflow: hidden;
+}
+
+.CodeMirror {
+  pointer-events: auto;
 }

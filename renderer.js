@@ -3,7 +3,7 @@ let editor;
 document.addEventListener('DOMContentLoaded', () => {
   const editorElement = document.getElementById('editor');
 
-  editor = CodeMirror.fromTextArea(editorElement, {
+  editor = window.CodeMirror.fromTextArea(editorElement, {
     mode: 'markdown',
     lineNumbers: true,
     lineWrapping: true,
