@@ -9,7 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
     direction: 'rtl',
     theme: 'default',
     rtlMoveVisually: true,
+    viewportMargin: Infinity,
   });
+
+  // Ensure the editor takes up the full height
+  const resizeEditor = () => {
+    editor.setSize(null, window.innerHeight);
+  };
+
+  // Initial resize
+  resizeEditor();
+
+  // Resize on window resize
+  window.addEventListener('resize', resizeEditor);
 
   editor.setValue('# سلام دنیا\n\nاین یک ویرایشگر مارک‌داون راست به چپ است.');
 
