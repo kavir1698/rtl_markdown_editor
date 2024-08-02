@@ -1,0 +1,28 @@
+{
+  "name": "rtl_markdown",
+  "version": "1.0.0",
+  "description": "A simple Markdown editor for right-to-left languages",
+  "main": "main.js",
+  "build": {
+    "appId": "com.example.rtlmarkdowneditor",
+    "files": [
+      "*.js",
+      "*.html",
+      "*.css"
+    ]
+  },
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "codemirror": "^5.65.17",
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3",
+    "marked": "^13.0.3"
+  }
+}
+
