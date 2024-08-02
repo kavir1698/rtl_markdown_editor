@@ -5,7 +5,10 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder --mac --windows --linux",
+    "build:mac": "electron-builder --mac",
+    "build:win": "electron-builder --windows",
+    "build:linux": "electron-builder --linux"
   },
   "devDependencies": {
     "electron": "^31.3.1",
@@ -15,10 +18,28 @@
   },
   "build": {
     "appId": "com.example.rtlmarkdowneditor",
+    "productName": "RTL Markdown Editor",
     "files": [
       "*.js",
-      "*.html"
-    ]
+      "*.html",
+      "*.css"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility"
+    }
   },
   "keywords": [
     "markdown",
