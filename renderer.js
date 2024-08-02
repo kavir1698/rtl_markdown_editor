@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', updateEditorSize);
   updateEditorSize();
 
+  // Handle new file
+  window.electronAPI.onNewFile(() => {
+    editor.setValue('');
+  });
+
   // Handle file open
   window.electronAPI.onFileOpened((event, content) => {
     editor.setValue(content);

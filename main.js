@@ -22,6 +22,13 @@ function createWindow() {
       label: 'File',
       submenu: [
         {
+          label: 'New File',
+          accelerator: 'CmdOrCtrl+N',
+          click: () => {
+            mainWindow.webContents.send('new-file');
+          }
+        },
+        {
           label: 'Open',
           accelerator: 'CmdOrCtrl+O',
           click: () => {
