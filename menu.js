@@ -77,6 +77,18 @@ function createMenu(mainWindow) {
         { type: 'separator' },
         { role: 'togglefullscreen' }
       ]
+    },
+    {
+      label: 'Format',
+      submenu: [
+        {
+          label: 'Toggle Text Direction',
+          accelerator: 'CmdOrCtrl+Shift+D',
+          click: () => {
+            mainWindow.webContents.send('toggle-text-direction');
+          }
+        }
+      ]
     }
   ];
 

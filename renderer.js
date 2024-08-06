@@ -2,6 +2,8 @@
 const { ipcRenderer } = require('electron');
 
 let currentFilePath = null;
+let editor;
+let isRTL = true;
 
 document.addEventListener('DOMContentLoaded', () => {
   const editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
@@ -17,6 +19,31 @@ document.addEventListener('DOMContentLoaded', () => {
   let isAutoSaveEnabled = true;
   let autoSaveTimer = null;
 
+  setDirection(isRTL);
+  ipcRenderer.on('toggle-text-direction', () => {
+    isRTL = !isRTL;
+    setDirection(isRTL);
+  });
+
+  function setDirection(rtl) {
+    const direction = rtl ? 'rtl' : 'ltr';
+    document.documentElement.dir = direction;
+    editor.setOption('direction', direction);
+
+    // Adjust CodeMirror sizer margin
+    const sizer = editor.display.sizer;
+    if (rtl) {
+      sizer.style.marginLeft = '';
+      sizer.style.marginRight = '30px';
+    } else {
+      sizer.style.marginRight = '';
+      sizer.style.marginLeft = '30px';
+    }
+
+    // Force CodeMirror to update its layout
+    editor.refresh();
+  }
+  
   async function saveFile() {
     if (currentFilePath) {
       const result = await ipcRenderer.invoke('save-file', { filePath: currentFilePath, content: editor.getValue() });

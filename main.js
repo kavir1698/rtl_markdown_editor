@@ -70,3 +70,7 @@ ipcMain.handle('open-file-dialog', async () => {
   }
   return null;
 });
+
+ipcMain.on('toggle-text-direction', (event) => {
+  mainWindow.webContents.send('toggle-text-direction');
+});
