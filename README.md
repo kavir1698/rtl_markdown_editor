@@ -20,8 +20,6 @@ Before you begin, ensure you have the following installed:
   `npm install`
 3. **Start the application:**
   `npm start`
-4. **Build binaries:**
-  `npm run build`
 
 ### To build for different platforms:
 
