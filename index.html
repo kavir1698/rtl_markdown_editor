@@ -13,21 +13,45 @@
       margin: 0;
       padding: 0;
     }
-  
+    
     #editor-container {
       height: 100%;
     }
-  
+    
     .CodeMirror {
       height: 100% !important;
       direction: inherit;
       text-align: inherit;
       font-size: 16px;
     }
-  
+    
     .CodeMirror-sizer {
-      margin-right: 30px !important;
+      margin-right: 10px !important;
     }
+    
+    .CodeMirror-linenumbers {
+      padding: 0 5px 0 5px;
+      min-width: 20px;
+      text-align: right;
+      white-space: nowrap;
+    }
+    
+    .CodeMirror-gutter-wrapper {
+      width: auto !important;
+    }
+    .CodeMirror-gutters {
+      width: auto !important;
+      min-width: 10px; /* Adjust as needed */
+      padding-right: 1px;
+    }
+    .CodeMirror-lines {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+      .CodeMirror-vscrollbar {
+    left: 0 !important;
+    right: auto !important;
+  }
   </style>
 </head>
 

@@ -34,10 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const sizer = editor.display.sizer;
     if (rtl) {
       sizer.style.marginLeft = '';
-      sizer.style.marginRight = '30px';
+      sizer.style.marginRight = 'auto';
     } else {
       sizer.style.marginRight = '';
-      sizer.style.marginLeft = '30px';
+      sizer.style.marginLeft = 'auto';
     }
 
     // Force CodeMirror to update its layout
