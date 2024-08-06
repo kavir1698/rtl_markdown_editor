@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     viewportMargin: Infinity,
   });
 
-  let isAutoSaveEnabled = false;
+  let isAutoSaveEnabled = true;
   let autoSaveTimer = null;
 
   async function saveFile() {
