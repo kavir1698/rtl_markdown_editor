@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Resize on window resize
   window.addEventListener('resize', resizeEditor);
 
-  editor.setValue('# سلام دنیا\n\nاین یک ویرایشگر مارک‌داون راست به چپ است.');
+  // editor.setValue('# سلام دنیا\n\nاین یک ویرایشگر مارک‌داون راست به چپ است.');
 
   ipcRenderer.on('new-file', () => {
     editor.setValue('');
