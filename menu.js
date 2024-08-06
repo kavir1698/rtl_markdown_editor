@@ -38,11 +38,44 @@ function createMenu(mainWindow) {
         {
           label: 'Toggle Auto-Save',
           type: 'checkbox',
-          checked: false,
+          checked: true,
           click: (menuItem) => {
             mainWindow.webContents.send('toggle-auto-save', menuItem.checked);
           }
         }
+      ]
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        {
+          label: 'Undo',
+          accelerator: 'CmdOrCtrl+Z',
+          click: () => mainWindow.webContents.send('undo')
+        },
+        {
+          label: 'Redo',
+          accelerator: 'CmdOrCtrl+Shift+Z',
+          click: () => mainWindow.webContents.send('redo')
+        },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' }
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        { role: 'reload' },
+        { role: 'forceReload' },
+        { role: 'toggleDevTools' },
+        { type: 'separator' },
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' }
       ]
     }
   ];

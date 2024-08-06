@@ -84,6 +84,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Add undo and redo handlers
+  ipcRenderer.on('undo', () => {
+    editor.undo();
+  });
+
+  ipcRenderer.on('redo', () => {
+    editor.redo();
+  });
+
+  // Add copy and paste handlers (optional, as CodeMirror handles these by default)
+  ipcRenderer.on('copy', () => {
+    const selectedText = editor.getSelection();
+    if (selectedText) {
+      navigator.clipboard.writeText(selectedText);
+    }
+  });
+
+  ipcRenderer.on('paste', async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      editor.replaceSelection(text);
+    } catch (err) {
+      console.error('Failed to paste:', err);
+    }
+  });
+
   // Ensure the editor takes up the full height
   const resizeEditor = () => {
     editor.setSize(null, window.innerHeight);

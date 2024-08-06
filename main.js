@@ -18,7 +18,7 @@ function createWindow() {
   });
 
   mainWindow.loadFile('index.html');
-  mainWindow.webContents.openDevTools(); // Open DevTools by default
+  // mainWindow.webContents.openDevTools(); // Open DevTools by default
 
   createMenu(mainWindow);
 }
